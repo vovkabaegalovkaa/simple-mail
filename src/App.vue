@@ -20,11 +20,24 @@
         login() {
             this.isAuth = true;
             //так как сразу после логина мы переходим на главную
-            this.$router.push("/dashboard")
+            //this.$router.push("/dashboard") вот было так а теперь сделаем чтобы лупило туда откуда мы вышли
+            if(this.$route.query.page){
+              this.$router.push(this.$route.query.page);
+            }
+            else{
+              this.$router.push("/dashboard");
+            }
         },
         logout() {
+            //реализуем штуку чтобы при выходе запоминать с какой именно страницы мы вышли
+            //мы может передать параметры в адресной строк через "/", query параметры через "?", или хэш через "#"
             this.isAuth = false;
-            this.$router.push("/login")
+            this.$router.push({
+              path: "/login",
+              query: {
+                page: this.$route.path// $router – это как бы сам роутер, объект библиотеки, а $route – объект текущего пути
+              }
+            })
 
         },
     },

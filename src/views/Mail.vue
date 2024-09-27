@@ -3,14 +3,16 @@
       <div class="card-nav">
         <ul class="list">
           <li class="list-item" v-for="email in emails" :key="email.id">
-            <a href="#">
+            <router-link :to="'/mail/' + email.id">
               {{email.theme}}
-            </a>
+            </router-link>
           </li>
         </ul>
       </div>
       <div class="card-body">
-        <app-email-body></app-email-body>
+        <router-view></router-view>
+        <!-- <app-email-body :mailId="$route.params.mailId"></app-email-body> -->
+        <!-- mailId доступен из "$route.params так как он указан как динамический параметр" -->
       </div>
     </div>
   </template>
@@ -19,10 +21,9 @@
   import AppEmailBody from '../components/AppEmailBody'
   
   export default {
-    // components: {AppEmailBody},
     inject: ['emails'],
     components: {
-      AppEmailBody
+      "app-email-body": AppEmailBody,
     }
   }
   </script>
